@@ -1,0 +1,361 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Registered Apna Role user profile (Job Seeker or Employer)",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "format": "email", "maxLength": 200 },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "role": { "type": "string", "enum": ["job_seeker", "employer"] },
+        "phone": { "type": "string", "maxLength": 30 },
+        "location": { "type": "string", "maxLength": 120 },
+        "headline": { "type": "string", "maxLength": 200 },
+        "bio": { "type": "string", "maxLength": 2000 },
+        "skills": { "type": "array", "description": "Up to 30 skills" },
+        "education": { "type": "array", "description": "Up to 10 education entries" },
+        "experience": { "type": "array", "description": "Up to 15 experience entries" },
+        "photoUrl": { "type": "string", "maxLength": 1000 },
+        "resumeUrl": { "type": "string", "maxLength": 1000 },
+        "resumeFileName": { "type": "string", "maxLength": 200 },
+        "emailVerified": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "displayName", "role", "createdAt", "updatedAt"]
+    },
+    "Employer": {
+      "title": "Employer",
+      "description": "Recruiter account metadata linked to a user and company",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyId": { "type": "string", "maxLength": 128 },
+        "designation": { "type": "string", "maxLength": 120 },
+        "workEmail": { "type": "string", "maxLength": 200 },
+        "verified": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "designation", "createdAt", "updatedAt"]
+    },
+    "Company": {
+      "title": "Company",
+      "description": "Hiring organization profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "industry": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "location": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "size": { "type": "string", "maxLength": 60 },
+        "website": { "type": "string", "maxLength": 300 },
+        "logoUrl": { "type": "string", "maxLength": 1000 },
+        "description": { "type": "string", "maxLength": 3000 },
+        "foundedYear": { "type": "string", "maxLength": 10 },
+        "verified": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "ownerId", "name", "industry", "location", "description", "verified", "createdAt", "updatedAt"]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "Job posting on Apna Role",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "employerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyName": { "type": "string", "minLength": 1, "maxLength": 140 },
+        "companyLogo": { "type": "string", "maxLength": 1000 },
+        "title": { "type": "string", "minLength": 3, "maxLength": 160 },
+        "category": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "location": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "workMode": { "type": "string", "enum": ["On-site", "Remote", "Hybrid"] },
+        "jobType": { "type": "string", "enum": ["Full Time", "Part Time", "Internship", "Government", "Contract"] },
+        "experienceLevel": { "type": "string", "enum": ["Fresher", "1-3 Years", "3-5 Years", "5+ Years"] },
+        "salaryMin": { "type": "integer" },
+        "salaryMax": { "type": "integer" },
+        "salaryDisplay": { "type": "string", "maxLength": 80 },
+        "description": { "type": "string", "minLength": 10, "maxLength": 6000 },
+        "responsibilities": { "type": "array" },
+        "skills": { "type": "array" },
+        "eligibility": { "type": "string", "maxLength": 1000 },
+        "benefits": { "type": "array" },
+        "deadline": { "type": "string", "maxLength": 40 },
+        "status": { "type": "string", "enum": ["approved", "pending", "rejected", "closed"] },
+        "featured": { "type": "boolean" },
+        "isFresher": { "type": "boolean" },
+        "isGovernment": { "type": "boolean" },
+        "applicantsCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "companyId", "employerId", "companyName", "title", "category", "location", "workMode", "jobType", "experienceLevel", "salaryMin", "salaryMax", "salaryDisplay", "description", "status", "featured", "createdAt", "updatedAt"]
+    },
+    "Internship": {
+      "title": "Internship",
+      "description": "Internship listing for students and freshers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "employerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyName": { "type": "string", "minLength": 1, "maxLength": 140 },
+        "companyLogo": { "type": "string", "maxLength": 1000 },
+        "title": { "type": "string", "minLength": 3, "maxLength": 160 },
+        "category": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "location": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "workMode": { "type": "string", "enum": ["On-site", "Remote", "Hybrid"] },
+        "duration": { "type": "string", "minLength": 2, "maxLength": 40 },
+        "stipend": { "type": "integer" },
+        "stipendDisplay": { "type": "string", "maxLength": 80 },
+        "isPaid": { "type": "boolean" },
+        "forStudents": { "type": "boolean" },
+        "skills": { "type": "array" },
+        "description": { "type": "string", "minLength": 10, "maxLength": 4000 },
+        "deadline": { "type": "string", "maxLength": 40 },
+        "status": { "type": "string", "enum": ["approved", "pending", "rejected", "closed"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "companyId", "employerId", "companyName", "title", "category", "location", "workMode", "duration", "stipend", "stipendDisplay", "isPaid", "description", "status", "createdAt", "updatedAt"]
+    },
+    "Application": {
+      "title": "Application",
+      "description": "Candidate job or internship application with live status tracking",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "jobId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "listingType": { "type": "string", "enum": ["job", "internship"] },
+        "jobTitle": { "type": "string", "maxLength": 160 },
+        "companyId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyName": { "type": "string", "maxLength": 140 },
+        "employerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "candidateId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "candidateName": { "type": "string", "maxLength": 120 },
+        "candidateEmail": { "type": "string", "maxLength": 200 },
+        "candidatePhone": { "type": "string", "maxLength": 30 },
+        "candidateSkills": { "type": "array" },
+        "resumeUrl": { "type": "string", "maxLength": 1000 },
+        "resumeFileName": { "type": "string", "maxLength": 200 },
+        "coverNote": { "type": "string", "maxLength": 2000 },
+        "status": { "type": "string", "enum": ["Applied", "Under Review", "Shortlisted", "Interview Scheduled", "Selected", "Rejected"] },
+        "interviewDate": { "type": "string", "maxLength": 80 },
+        "interviewMode": { "type": "string", "maxLength": 60 },
+        "interviewLink": { "type": "string", "maxLength": 500 },
+        "recruiterNotes": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "jobId", "listingType", "jobTitle", "companyId", "companyName", "employerId", "candidateId", "candidateName", "candidateEmail", "status", "createdAt", "updatedAt"]
+    },
+    "SavedJob": {
+      "title": "SavedJob",
+      "description": "Bookmarked job or internship saved by a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "jobId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "listingType": { "type": "string", "enum": ["job", "internship"] },
+        "jobTitle": { "type": "string", "maxLength": 160 },
+        "companyName": { "type": "string", "maxLength": 140 },
+        "location": { "type": "string", "maxLength": 120 },
+        "salaryDisplay": { "type": "string", "maxLength": 80 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "jobId", "listingType", "jobTitle", "companyName", "createdAt"]
+    },
+    "Resume": {
+      "title": "Resume",
+      "description": "Structured resume created via Apna Role AI Resume Builder",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "template": { "type": "string", "enum": ["executive", "modern", "minimal"] },
+        "fullName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "email": { "type": "string", "maxLength": 200 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "location": { "type": "string", "maxLength": 120 },
+        "linkedin": { "type": "string", "maxLength": 300 },
+        "summary": { "type": "string", "maxLength": 2500 },
+        "skills": { "type": "array" },
+        "education": { "type": "array" },
+        "experience": { "type": "array" },
+        "projects": { "type": "array" },
+        "certifications": { "type": "array" },
+        "achievements": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "title", "template", "fullName", "createdAt", "updatedAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "User notification for application updates, interviews, and alerts",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "message": { "type": "string", "minLength": 1, "maxLength": 600 },
+        "type": { "type": "string", "enum": ["application", "interview", "alert", "system"] },
+        "link": { "type": "string", "maxLength": 300 },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "title", "message", "type", "read", "createdAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Company review and rating submitted by an authenticated user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "authorName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "roleTitle": { "type": "string", "maxLength": 120 },
+        "rating": { "type": "integer" },
+        "title": { "type": "string", "minLength": 3, "maxLength": 140 },
+        "pros": { "type": "string", "maxLength": 1000 },
+        "cons": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "companyId", "userId", "authorName", "rating", "title", "createdAt"]
+    },
+    "JobAlert": {
+      "title": "JobAlert",
+      "description": "Custom job alert subscription created by a job seeker",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "keyword": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "location": { "type": "string", "maxLength": 120 },
+        "category": { "type": "string", "maxLength": 80 },
+        "frequency": { "type": "string", "enum": ["Daily", "Weekly", "Instant"] },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "keyword", "frequency", "active", "createdAt"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "User report flagging suspicious or fake job postings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "jobId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "jobTitle": { "type": "string", "maxLength": 160 },
+        "reporterId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "reason": { "type": "string", "minLength": 3, "maxLength": 120 },
+        "details": { "type": "string", "maxLength": 1500 },
+        "status": { "type": "string", "enum": ["open", "reviewed", "dismissed", "action_taken"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "jobId", "reporterId", "reason", "status", "createdAt", "updatedAt"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Managed job category metadata",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "slug": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "slug", "active", "createdAt"]
+    },
+    "EmailLog": {
+      "title": "EmailLog",
+      "description": "Audit log written by Firebase Cloud Function when automated status emails are dispatched",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "applicationId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "candidateId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "employerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "recipientEmail": { "type": "string", "maxLength": 200 },
+        "statusTriggered": { "type": "string", "enum": ["Shortlisted", "Interview Scheduled"] },
+        "subject": { "type": "string", "maxLength": 240 },
+        "deliveryStatus": { "type": "string", "enum": ["sent", "failed", "failed_missing_smtp"] },
+        "messageId": { "type": "string", "maxLength": 200 },
+        "errorMessage": { "type": "string", "maxLength": 400 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "applicationId", "candidateId", "employerId", "recipientEmail", "statusTriggered", "deliveryStatus", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User accounts and profiles (PII-protected; owner or admin read)"
+    },
+    "/employers/{employerId}": {
+      "schema": { "$ref": "#/entities/Employer" },
+      "description": "Recruiter account metadata"
+    },
+    "/companies/{companyId}": {
+      "schema": { "$ref": "#/entities/Company" },
+      "description": "Public company directory and verified organization profiles"
+    },
+    "/jobs/{jobId}": {
+      "schema": { "$ref": "#/entities/Job" },
+      "description": "Job postings across categories and locations"
+    },
+    "/internships/{internshipId}": {
+      "schema": { "$ref": "#/entities/Internship" },
+      "description": "Dedicated student and fresher internship listings"
+    },
+    "/applications/{applicationId}": {
+      "schema": { "$ref": "#/entities/Application" },
+      "description": "Job and internship applications with status tracking"
+    },
+    "/savedJobs/{savedId}": {
+      "schema": { "$ref": "#/entities/SavedJob" },
+      "description": "Candidate bookmarked jobs and internships"
+    },
+    "/resumes/{resumeId}": {
+      "schema": { "$ref": "#/entities/Resume" },
+      "description": "AI-assisted candidate resumes"
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "Real-time user notifications"
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Company ratings and reviews"
+    },
+    "/jobAlerts/{alertId}": {
+      "schema": { "$ref": "#/entities/JobAlert" },
+      "description": "Custom candidate job alert rules"
+    },
+    "/reports/{reportId}": {
+      "schema": { "$ref": "#/entities/Report" },
+      "description": "Reported suspicious or fake job listings"
+    },
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Admin-managed job categories"
+    },
+    "/emailLogs/{logId}": {
+      "schema": { "$ref": "#/entities/EmailLog" },
+      "description": "Cloud Function email delivery audit logs (Admin SDK writes only; read scoped to candidate/employer/admin)"
+    }
+  }
+}
